@@ -331,7 +331,7 @@ module RubyCAS
 
         if controller.request.post? &&
             controller.params['logoutRequest'] &&
-            URI.unescape(controller.params['logoutRequest']) =~
+            CGI.unescape(controller.params['logoutRequest']) =~
               %r{^<samlp:LogoutRequest.*?<samlp:SessionIndex>(.*)</samlp:SessionIndex>}m
           # TODO: Maybe check that the request came from the registered CAS server? Although this might be
           #       pointless since it's easily spoofable...
@@ -425,7 +425,7 @@ module RubyCAS
         return "#{Rails.root}/tmp/sessions/cas_sess.#{st}"
       end
     end
-    
+
     class GatewayFilter < Filter
       def self.use_gatewaying?
         return true unless @@config[:use_gatewaying] == false
